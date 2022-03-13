@@ -55,11 +55,11 @@ public class FourierFunction
 
     public static FourierFunction Of(Complex[] vals, int numberOfVectors)
     {
-        Complex[] coeffs = new Complex[numberOfVectors * 2 + 1];
-        for (int i = -numberOfVectors; i <= numberOfVectors; ++i)
+        Complex[] coeffs = new Complex[numberOfVectors];
+        for (int i = 0; i < numberOfVectors; ++i)
         {
-            int ind = FrequencyToIndex(i);
-            coeffs[ind] = CalculateCoefficient(vals, i);
+            int freq = IndexToFrequency(i);
+            coeffs[i] = CalculateCoefficient(vals, freq);
         }
         return new FourierFunction(coeffs);
     }
