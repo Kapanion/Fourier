@@ -71,12 +71,11 @@ public class FourierFunction
 
     public static FourierFunction Of(Complex[] vals, int numberOfVectors)
     {
-        Complex[] coeffs = new Complex[numberOfVectors * 2 + 1];
-        for (int i = -numberOfVectors; i <= numberOfVectors; ++i)
+        Complex[] coeffs = new Complex[numberOfVectors];
+        for (int i = 0; i < numberOfVectors; ++i)
         {
-            int ind = FrequencyToIndex(i);
-            coeffs[ind] = CalculateCoefficient(vals, i);
-            UnityEngine.Debug.Log(i + ": " + coeffs[ind]);
+            int freq = IndexToFrequency(i);
+            coeffs[i] = CalculateCoefficient(vals, freq);
         }
         return new FourierFunction(coeffs);
     }
@@ -89,20 +88,28 @@ public class FourierFunction
         }
         return Of(vals, numberOfVectors);
     }
-
-    static Complex CalculateCoefficient(Complex[] vals, int freq, int precision = 10000)
+    static Complex CalculateCoefficient(Complex[] vals, int freq, double maxDist = 0.005)
     {
         Complex sum = Complex.Zero;
+        int numberOfPoints = 0;
+        int currentPoint = 0;
         for (int i = 0; i < vals.Length; ++i)
         {
-            for (int j = 0; j < precision; j++)
-            {
-                Complex val = (vals[i] * (precision - j) + vals[(i + 1) % vals.Length] * j) / precision;
-                double t = (double)(i * precision + j ) / (vals.Length * precision);
-                sum += val * Complex.Exp(-freq * 2 * System.Math.PI * Complex.ImaginaryOne * t);
-            }            
+            int extraPoints = (int)((vals[i] - vals[(i + 1) % vals.Length]).Magnitude / maxDist) + 1;
+            numberOfPoints += extraPoints;
         }
-        sum /= (vals.Length * precision);
+        for (int i = 0; i < vals.Length; ++i)
+            {
+            int extraPoints = (int)((vals[i] - vals[(i + 1) % vals.Length]).Magnitude / maxDist) + 1;
+            for (int j = 0; j < extraPoints; j++)
+            {
+                Complex val = (vals[i] * (extraPoints - j) + vals[(i + 1) % vals.Length] * j) / extraPoints;
+                double t = (double)currentPoint / numberOfPoints;
+                currentPoint++;
+                sum += val * Complex.Exp(-freq * 2 * System.Math.PI * Complex.ImaginaryOne * t);
+            }
+        }
+        sum /= numberOfPoints;
         return sum;
     }
 }
