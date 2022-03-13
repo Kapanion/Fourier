@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Brush : MonoBehaviour
 {
-    public Tracer tracer;
+    public int numberOfVectors;
+    public FourierDrawer drawer;
     public Color color;
 
     private List<Vector2> vecList = new List<Vector2>();
@@ -24,7 +25,7 @@ public class Brush : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             trlRend.enabled = true;
-            tracer.Hide();
+           // drawer.Hide();
             vecList.Add(pos);
             transform.position = pos;
         }
@@ -41,8 +42,9 @@ public class Brush : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            tracer.UpdateFunction(vecList.ToArray());
-            tracer.Show();
+            //drawer.UpdateFunction(vecList.ToArray());
+            //drawer.Show();
+            drawer.Init(vecList.ToArray(), numberOfVectors);
         }
     }
 }

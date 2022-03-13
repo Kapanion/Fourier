@@ -1,3 +1,4 @@
+/*
 using System.Numerics;
 using Aspose.Svg;
 using Aspose.Svg.Collections;
@@ -97,3 +98,4 @@ public class FileToPointsConverter
         }
     }
 }
+*/
