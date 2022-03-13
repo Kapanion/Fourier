@@ -90,13 +90,13 @@ public class FourierDrawer : MonoBehaviour
     (Vector3, float)[] GetVectorPositionsAndAngles(float time)
     {
         Complex[] results = function.ValuesAt(time);
-        var answer = new (Vector3, float)[results.Length - 1];
+        var answer = new (Vector3, float)[results.Length];
 
-        for (int i = 1; i < results.Length - 1; i++)
+        for (int i = 0; i < results.Length; i++)
         {
             Complex result = results[i];
             Vector3 position = new Vector3((float)result.Real, (float)result.Imaginary, 0);
-            Complex next = results[i] - results[i-1];
+            Complex next = results[i] - (i == 0 ? Complex.Zero : results[i-1]);
             float angle = Mathf.Atan2((float)next.Imaginary, (float)next.Real) * Mathf.Rad2Deg;
 
             answer[i] = (position, angle);
