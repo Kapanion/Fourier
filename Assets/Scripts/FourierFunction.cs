@@ -10,6 +10,9 @@ public class FourierFunction
     {
         this.coefficients = coefficients;
     }
+
+    public int Size => coefficients.Length;
+
     public Complex ValueAt(float t)
     {
         Complex res = Complex.Zero;
@@ -17,6 +20,19 @@ public class FourierFunction
         {
             int freq = IndexToFrequency(i);
             res += coefficients[i] * Complex.Exp(freq * 2f * System.Math.PI * Complex.ImaginaryOne * t);
+        }
+        return res;
+    }
+
+    public Complex[] ValuesAt(float t)
+    {
+        Complex[] res = new Complex[coefficients.Length];
+        Complex last = Complex.Zero;
+        for (int i = 0; i < coefficients.Length; ++i)
+        {
+            int freq = IndexToFrequency(i);
+            last += coefficients[i] * Complex.Exp(freq * 2f * System.Math.PI * Complex.ImaginaryOne * t);
+            res[i] = last;
         }
         return res;
     }
@@ -43,12 +59,12 @@ public class FourierFunction
         return (float)coefficients[ind].Magnitude;
     }
 
-    private static int IndexToFrequency(int ind)
+    public static int IndexToFrequency(int ind)
     {
         return ind % 2 == 0 ? -ind/2 : (ind+1)/2;
     }
 
-    private static int FrequencyToIndex(int freq)
+    public static int FrequencyToIndex(int freq)
     {
         return freq > 0 ? freq * 2 - 1 : -freq * 2;
     }
