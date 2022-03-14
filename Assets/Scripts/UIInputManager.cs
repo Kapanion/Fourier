@@ -8,7 +8,7 @@ public class UIInputManager : MonoBehaviour
     public KeyCode uiToggleKey = KeyCode.P;
     public GameObject ui;
 
-    public Text waveSpeedText;
+    public Text waveSpeedText, timeScaleText, trailLifeTimeText;
 
     public FourierDrawer drawer;
 
@@ -16,7 +16,7 @@ public class UIInputManager : MonoBehaviour
     public Sprite checkedSprite, uncheckedSprite;
 
     public Button noTrailButton, normalTrailButton, waveTrailButton;
-    public Slider waveSpeedSlider;
+    public Slider waveSpeedSlider, timeScaleSlider, trailLifetimeSlider;
 
     [ContextMenu("Toggle")]
     void Toggle()
@@ -34,6 +34,8 @@ public class UIInputManager : MonoBehaviour
     void SetupUI()
     {
         waveSpeedSlider.value = drawer.waveLineSpeedMultiplier;
+        timeScaleSlider.value = drawer.fourierTimeScale;
+        trailLifetimeSlider.value = drawer.trailPoint.GetComponent<TrailRenderer>().time;
         var trailButton = drawer.trailMode switch
         {
             FourierDrawer.TrailMode.Trail => normalTrailButton,
@@ -54,6 +56,20 @@ public class UIInputManager : MonoBehaviour
         value = value.Round1();
         drawer.waveLineSpeedMultiplier = value;
         waveSpeedText.text = $"Wave Speed: {value}x";
+    }
+
+    public void OnTimeScaleChanged(float value)
+    {
+        value = value.Round1();
+        drawer.fourierTimeScale = value;
+        timeScaleText.text = $"Time Scale: {value}x";
+    }
+
+    public void OnTrailLifetimeChanged(float value)
+    {
+        value = value.Round1();
+        drawer.trailPoint.GetComponent<TrailRenderer>().time = value;
+        trailLifeTimeText.text = $"Trail Lifetime: {value}s";
     }
 
     public void OnTrailDisabled()
