@@ -11,14 +11,28 @@ public class Brush : MonoBehaviour
     private List<Vector2> vecList = new List<Vector2>();
     private TrailRenderer trlRend;
 
+    public bool working;
+
     void Start()
     {
         trlRend = GetComponent<TrailRenderer>();
         Cursor.visible = true;
     }
 
+    public void Init()
+    {
+        working = true;
+    }
+
+    public void Toggle()
+    {
+        trlRend.enabled = !trlRend.enabled;
+    }
+
     void Update()
     {
+        if (!working) return;
+
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         trlRend.time = 1000;
 
@@ -44,6 +58,7 @@ public class Brush : MonoBehaviour
         {
             //drawer.UpdateFunction(vecList.ToArray());
             //drawer.Show();
+            working = false;
             drawer.Init(vecList.ToArray(), numberOfVectors);
         }
     }

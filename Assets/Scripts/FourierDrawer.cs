@@ -11,6 +11,7 @@ public class FourierDrawer : MonoBehaviour
     public TrailMode trailMode;
 
     public Transform trailPoint;
+    
     public LineRenderer waveLine;
 
     private FourierFunction function;
@@ -27,22 +28,37 @@ public class FourierDrawer : MonoBehaviour
 
     float waveLineLastTime = 0;
 
+    float flashPoint = 0; // last time game was reset, needed to not mess up drawing logic
+
     [ContextMenu("Clear")]
     public void Clear()
     {
         started = false;
         function = null;
+        vectors = null;
+        magnitudes = null;
+        trailPoint.GetComponent<TrailRenderer>().Clear();
+        waveLine.positionCount = 0;
+        if (Application.isEditor) DestroyImmediate(vectorParent.gameObject);
+        else Destroy(vectorParent.gameObject);
+        vectorParent = new GameObject("Vector Parent").transform;
     }
 
     public void Init(Vector2[] vals, int numberOfVectors)
     {
-        if (started) return;
+        if (started) Reset();
 
         function = FourierFunction.Of(vals, numberOfVectors);
 
         SetupVectors();
 
         started = true;
+    }
+
+    public void Reset()
+    {
+        flashPoint = Time.time;
+        Clear();
     }
 
     void SetupVectors()
@@ -85,7 +101,7 @@ public class FourierDrawer : MonoBehaviour
     {
         if (!started) return;
 
-        float time = Time.time * fourierTimeScale;
+        float time = (Time.time - flashPoint) * fourierTimeScale;
 
         if (trailMode == TrailMode.Trail) DisplayTrail(time);
         else if (trailMode == TrailMode.Wave) DisplayTrailWave(time);
