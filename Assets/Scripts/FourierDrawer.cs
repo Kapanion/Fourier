@@ -6,9 +6,12 @@ using UnityEngine;
 public class FourierDrawer : MonoBehaviour
 {
     public bool displayVectors;
-    public bool displayResultTrail;
+
+    public enum TrailMode { None, Trail, Wave }
+    public TrailMode trailMode;
 
     public Transform trailPoint;
+    public LineRenderer waveLine;
 
     private FourierFunction function;
     private float[] magnitudes;
@@ -20,6 +23,9 @@ public class FourierDrawer : MonoBehaviour
     private bool started = false;
 
     public float fourierTimeScale = 0.2f;
+    public float waveLineSpeedMultiplier = 1;
+
+    float waveLineLastTime = 0;
 
     [ContextMenu("Clear")]
     public void Clear()
@@ -34,15 +40,6 @@ public class FourierDrawer : MonoBehaviour
 
         function = FourierFunction.Of(vals, numberOfVectors);
 
-        magnitudes = new float[function.Size];
-
-        if (displayVectors) for(int i = 0; i < function.Size; i++)
-        {
-            int freq = FourierFunction.IndexToFrequency(i);
-
-            magnitudes[i] = function.GetMagnitude(freq);
-        }
-
         SetupVectors();
 
         started = true;
@@ -52,8 +49,21 @@ public class FourierDrawer : MonoBehaviour
     {
         var data = GetVectorPositionsAndAngles(0);
 
+        SetupMagnitudes();
         SpawnVectors(data);
         DisplayVectors(data);
+    }
+
+    void SetupMagnitudes()
+    {
+        magnitudes = new float[function.Size];
+
+        if (displayVectors) for (int i = 0; i < function.Size; i++)
+            {
+                int freq = FourierFunction.IndexToFrequency(i);
+
+                magnitudes[i] = function.GetMagnitude(freq);
+            }
     }
 
     void SpawnVectors((Vector3, float)[] data)
@@ -77,7 +87,9 @@ public class FourierDrawer : MonoBehaviour
 
         float time = Time.time * fourierTimeScale;
 
-        if (displayResultTrail) DisplayTrail(time);
+        if (trailMode == TrailMode.Trail) DisplayTrail(time);
+        else if (trailMode == TrailMode.Wave) DisplayTrailWave(time);
+
         if (displayVectors) DisplayVectors(GetVectorPositionsAndAngles(time));
     }
 
@@ -116,5 +128,45 @@ public class FourierDrawer : MonoBehaviour
         Vector3 position = new Vector3((float)result.Real, (float)result.Imaginary, 0);
 
         trailPoint.position = position;
+    }
+
+    void DisplayTrailWave(float time)
+    {
+        Complex result = function.ValueAt(time);
+        Vector3 position = new Vector3((float)result.Real, (float)result.Imaginary, 0);
+
+        int last = waveLine.positionCount++;
+        waveLine.SetPosition(last, position - waveLine.transform.position);
+
+        waveLine.transform.position += Vector3.right * (time - waveLineLastTime) * waveLineSpeedMultiplier;
+
+        waveLineLastTime = time;
+    }
+
+    public void SetTrailMode(TrailMode mode)
+    {
+        if (mode == trailMode) return;
+
+        trailPoint.GetComponent<TrailRenderer>().Clear();
+        waveLine.positionCount = 0;
+        trailMode = mode;
+    }
+
+    public void EnableVectors()
+    {
+        if (displayVectors) return;
+
+        displayVectors = true;
+
+        if (vectorParent.childCount == 0) SetupVectors();
+        else vectorParent.gameObject.SetActive(true);
+    }
+
+    public void DisableVectors()
+    {
+        if (!displayVectors) return;
+
+        displayVectors = false;
+        vectorParent.gameObject.SetActive(false);
     }
 }
