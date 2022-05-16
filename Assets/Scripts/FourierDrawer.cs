@@ -55,6 +55,18 @@ public class FourierDrawer : MonoBehaviour
         started = true;
     }
 
+    public void Init(Complex[] coefficients)
+    {
+        //if (started)
+        Reset();
+
+        function = new FourierFunction(coefficients);
+
+        SetupVectors();
+
+        started = true;
+    }
+
     public void Reset()
     {
         flashPoint = Time.time;
@@ -136,6 +148,14 @@ public class FourierDrawer : MonoBehaviour
     void DisplayVectors((Vector3, float)[] data)
     {
         for(int i = 0; i < data.Length; i++) DirectArrow(i, data[i].Item1, data[i].Item2);
+    }
+
+    public void DisplayVectorsAtZeroTimeWithCoefficients(Complex[] coefficients)
+    {
+        Clear();
+        function = new FourierFunction(coefficients);
+        SetupVectors();
+        DisplayVectors(GetVectorPositionsAndAngles(0));
     }
 
     void DisplayTrail(float time)
