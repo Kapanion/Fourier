@@ -177,6 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1675051460316919748}
   - component: {fileID: 7006508276131908479}
+  - component: {fileID: 7089451317081693453}
   m_Layer: 0
   m_Name: arrow
   m_TagString: Untagged
@@ -239,7 +240,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8aefde2c778f19b42beffcaa10525bbe, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -249,6 +250,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7089451317081693453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3967628720308300788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd44d6ab7567e434c854660132456d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileComponent: 6
 --- !u!1 &7981910785164900395
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 416467390625381298}
   - component: {fileID: 6615462408150728432}
+  - component: {fileID: 3893436189542387988}
   m_Layer: 0
   m_Name: circle
   m_TagString: Untagged
@@ -321,7 +336,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7ba9c1f462abf574d923f7349bcf9b9c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.45882353}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.45882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -331,3 +346,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3893436189542387988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981910785164900395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd44d6ab7567e434c854660132456d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileComponent: 7

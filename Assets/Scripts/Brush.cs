@@ -6,7 +6,6 @@ public class Brush : MonoBehaviour
 {
     public int numberOfVectors;
     public FourierDrawer drawer;
-    public Color color;
 
     private List<Vector2> vecList = new List<Vector2>();
     private TrailRenderer trlRend;
