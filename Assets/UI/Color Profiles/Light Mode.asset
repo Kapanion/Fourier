@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20133ebb5af7b3544964eb5fa5f65818, type: 3}
   m_Name: Light Mode
   m_EditorClassIdentifier: 
-  profileName: 
+  profileName: Light Mode
   UIBackgroundColor: {r: 0.7529412, g: 0.6039216, b: 0.972549, a: 1}
   UIButtonColor: {r: 0.40784314, g: 0.047058824, b: 0.5882353, a: 1}
   UITextColor: {r: 0.27058825, g: 0.03137255, b: 0.39215687, a: 1}
