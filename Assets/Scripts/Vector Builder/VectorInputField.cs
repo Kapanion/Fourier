@@ -40,6 +40,12 @@ public class VectorInputField : MonoBehaviour
         frequency.text = freq.ToString();
     }
 
+    public void SetInteractable(bool interactable)
+    {
+        lengthField.interactable = interactable;
+        rotationField.interactable = interactable;
+    }
+
     public Complex GetCoefficient()
     {
         var v = Quaternion.Euler(0, 0, rotation) * Vector3.right * length;

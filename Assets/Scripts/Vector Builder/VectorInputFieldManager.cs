@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Complex = System.Numerics.Complex;
 
 public class VectorInputFieldManager : MonoBehaviour
@@ -12,6 +14,12 @@ public class VectorInputFieldManager : MonoBehaviour
 
     [Space]
     public FourierDrawer fourierDrawer;
+    private Action redrawStopped;
+
+    [Space]
+    public Button[] buttons;
+
+    private bool simulationActive = false;
 
     private void Start()
     {
@@ -19,6 +27,8 @@ public class VectorInputFieldManager : MonoBehaviour
         {
             Destroy(fieldsParent.GetChild(i).gameObject);
         }
+
+        redrawStopped = delegate { fourierDrawer.DisplayVectorsAtZeroTimeWithCoefficients(GetCoefficients()); };
 
         AddField();
     }
@@ -29,7 +39,7 @@ public class VectorInputFieldManager : MonoBehaviour
         VectorInputField newField = Instantiate(fieldPrefab).GetComponent<VectorInputField>();
         newField.transform.SetParent(fieldsParent, false);
         newField.SetFrequencyText(FourierFunction.IndexToFrequency(fields.Count));
-        newField.redraw = delegate { fourierDrawer.DisplayVectorsAtZeroTimeWithCoefficients(GetCoefficients()); };
+        newField.redraw = redrawStopped;
         fields.Add(newField);
     }
 
@@ -51,8 +61,36 @@ public class VectorInputFieldManager : MonoBehaviour
         return coefs.ToArray();
     }
 
-    public void StartSimulation()
+    private void SetInteractableAll(bool interactable)
     {
+        foreach (var field in fields)
+        {
+            field.SetInteractable(interactable);
+        }
+        foreach(var button in buttons)
+        {
+            button.interactable = interactable;
+        }
+    }
+
+    private void StartSimulation()
+    {
+        SetInteractableAll(false);
         fourierDrawer.Init(GetCoefficients());
+    }
+
+    private void StopSimulation()
+    {
+        SetInteractableAll(true);
+        fourierDrawer.Reset();
+        redrawStopped();
+    }
+
+    public void ToggleSimulation()
+    {
+        if (simulationActive) StopSimulation();
+        else StartSimulation();
+
+        simulationActive = !simulationActive;
     }
 }

@@ -913,6 +913,9 @@ MonoBehaviour:
   fieldsParent: {fileID: 163620049}
   vectorNumberLimit: 200
   fourierDrawer: {fileID: 659248047}
+  buttons:
+  - {fileID: 1367503140}
+  - {fileID: 2104113053}
 --- !u!1 &347812640
 GameObject:
   m_ObjectHideFlags: 0
@@ -4743,7 +4746,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 312650237}
         m_TargetAssemblyTypeName: VectorInputFieldManager, Assembly-CSharp
-        m_MethodName: StartSimulation
+        m_MethodName: ToggleSimulation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

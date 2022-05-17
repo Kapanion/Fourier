@@ -37,22 +37,12 @@ public class FourierFunction
         return res;
     }
 
-    /// <summary>
-    /// Returns the starting rotation of the vector with the rotation frequency of <c>freq</c>.
-    /// </summary>
-    /// <param name="freq"></param>
-    /// <returns></returns>
     public float GetStartRotation(int freq)
     {
         int ind = FrequencyToIndex(freq);
         return Mathf.Atan2((float)coefficients[ind].Imaginary, (float)coefficients[ind].Real);
     }
 
-    /// <summary>
-    /// Returns the magnitude of the vector with the rotation frequency of <c>freq</c>.
-    /// </summary>
-    /// <param name="freq"></param>
-    /// <returns></returns>
     public float GetMagnitude(int freq)
     {
         int ind = FrequencyToIndex(freq);
