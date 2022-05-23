@@ -49,19 +49,20 @@ public class UIMoverButton : MonoBehaviour
     public void StartTransition()
     {
         if (transitionActive) return;
-        if (currentState == UIElementState.Normal)
+        switch (currentState)
         {
-            StartCoroutine(Transition(normalPos, hiddenPos, 180, 0, transitionTime));
-            currentState = UIElementState.Hidden;
-        }
-        else if (currentState == UIElementState.Hidden)
-        {
-            StartCoroutine(Transition(hiddenPos, normalPos, 0, 180, transitionTime));
-            currentState = UIElementState.Normal;
+            case UIElementState.Normal:
+                StartCoroutine(Transition(normalPos, hiddenPos, 180, 0, transitionTime));
+                currentState = UIElementState.Hidden;
+                break;
+            case UIElementState.Hidden:
+                StartCoroutine(Transition(hiddenPos, normalPos, 0, 180, transitionTime));
+                currentState = UIElementState.Normal;
+                break;
         }
     }
     
-    IEnumerator Transition(Vector3 startPos, Vector3 endPos, float startRot, float endRot, float time)
+    private IEnumerator Transition(Vector3 startPos, Vector3 endPos, float startRot, float endRot, float time)
     {
         transitionActive = true;
         for (float i = 0; ; i += Time.deltaTime )
