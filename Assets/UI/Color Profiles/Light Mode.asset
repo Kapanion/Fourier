@@ -15,7 +15,10 @@ MonoBehaviour:
   profileName: Light Mode
   UIBackgroundColor: {r: 0.7529412, g: 0.6039216, b: 0.972549, a: 1}
   UIButtonColor: {r: 0.40784314, g: 0.047058824, b: 0.5882353, a: 1}
+  UIButtonColor2: {r: 0.40784314, g: 0.047058824, b: 0.5882353, a: 1}
   UITextColor: {r: 0.27058825, g: 0.03137255, b: 0.39215687, a: 1}
+  UITextColor2: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
+  UIButtonTextColor: {r: 0.7529412, g: 0.6039216, b: 0.972549, a: 1}
   UIBoldTextColor: {r: 0.27058825, g: 0.03137255, b: 0.39215687, a: 1}
   UISliderColor: {r: 0.40784314, g: 0.047058824, b: 0.5882353, a: 1}
   BackgroundColor: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}

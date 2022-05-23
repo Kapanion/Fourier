@@ -9,7 +9,10 @@ public class ColorProfile : ScriptableObject
     
     public Color UIBackgroundColor;
     public Color UIButtonColor;
+    public Color UIButtonColor2;
     public Color UITextColor;
+    public Color UITextColor2;
+    public Color UIButtonTextColor;
     public Color UIBoldTextColor;
     public Color UISliderColor;
     public Color BackgroundColor;
@@ -27,8 +30,14 @@ public class ColorProfile : ScriptableObject
                 return this.UIBackgroundColor;
             case ColorProfileComponent.UIButtonColor:
                 return this.UIButtonColor;
+            case ColorProfileComponent.UIButtonColor2:
+                return this.UIButtonColor2;
             case ColorProfileComponent.UITextColor:
                 return this.UITextColor;
+            case ColorProfileComponent.UITextColor2:
+                return this.UITextColor2;
+            case ColorProfileComponent.UIButtonTextColor:
+                return this.UIButtonTextColor;
             case ColorProfileComponent.UIBoldTextColor:
                 return this.UIBoldTextColor;
             case ColorProfileComponent.UISliderColor:
@@ -61,4 +70,7 @@ public enum ColorProfileComponent
     VectorCircleColor,
     TrailColor,
     BrushColor,
+    UITextColor2,
+    UIButtonColor2,
+    UIButtonTextColor,
 }
