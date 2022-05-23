@@ -55,21 +55,21 @@ public class UIInputManager : MonoBehaviour
     {
         value = value.Round1();
         drawer.waveLineSpeedMultiplier = value;
-        waveSpeedText.text = $"Wave Speed: {value}x";
+        waveSpeedText.text = $"WAVE SPEED: {value}x";
     }
 
     public void OnTimeScaleChanged(float value)
     {
-        value = value.Round1();
+        value = value.Round2();
         drawer.fourierTimeScale = value;
-        timeScaleText.text = $"Time Scale: {value}x";
+        timeScaleText.text = $"DRAW SPEED: {value}x";
     }
 
     public void OnTrailLifetimeChanged(float value)
     {
         value = value.Round1();
         drawer.trailPoint.GetComponent<TrailRenderer>().time = value;
-        trailLifeTimeText.text = $"Trail Lifetime: {value}s";
+        trailLifeTimeText.text = $"TRAIL LIFETIME: {value}s";
     }
 
     public void OnTrailDisabled()

@@ -6,16 +6,19 @@ using UnityEngine;
 public class ColorManagerSingleton : SingletonBase<ColorManagerSingleton>
 {
     public event Action ChangeColors = null;
-    public ColorProfile profile;
+    public ColorProfile[] profiles;
 
+    public ColorProfile profile;
+    private int currProfile;
 
     private void Start()
     {
         RefreshColors();
     }
 
-    public void RefreshColors()
+    private void RefreshColors()
     {
+        profile = profiles[currProfile];
         if (ChangeColors == null)
         {
             Debug.Log("No subscribers to the ChangeColors event");
@@ -35,5 +38,11 @@ public class ColorManagerSingleton : SingletonBase<ColorManagerSingleton>
             obj.OnEnable();
         }
         RefreshColors();
+    }
+
+    public void SetProfile(int index)
+    {
+        currProfile = index;
+        RefreshColors();        
     }
 }

@@ -172,9 +172,11 @@ public class FourierDrawer : MonoBehaviour
         Vector3 position = new Vector3((float)result.Real, (float)result.Imaginary, 0);
 
         int last = waveLine.positionCount++;
-        waveLine.SetPosition(last, position - waveLine.transform.position);
+        var position1 = waveLine.transform.position;
+        waveLine.SetPosition(last, position - position1);
 
-        waveLine.transform.position += Vector3.right * (time - waveLineLastTime) * waveLineSpeedMultiplier;
+        position1 += Vector3.right * ((time - waveLineLastTime) * waveLineSpeedMultiplier);
+        waveLine.transform.position = position1;
 
         waveLineLastTime = time;
     }

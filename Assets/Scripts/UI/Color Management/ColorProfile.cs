@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Color Profile", fileName = "New color profile")]
 public class ColorProfile : ScriptableObject
@@ -14,7 +15,7 @@ public class ColorProfile : ScriptableObject
     public Color UITextColor2;
     public Color UIButtonTextColor;
     public Color UIBoldTextColor;
-    public Color UISliderColor;
+    [FormerlySerializedAs("UISliderColor")] public Color UISliderBackgroundColor;
     public Color BackgroundColor;
     public Color VectorColor;
     public Color VectorCircleColor;
@@ -40,8 +41,8 @@ public class ColorProfile : ScriptableObject
                 return this.UIButtonTextColor;
             case ColorProfileComponent.UIBoldTextColor:
                 return this.UIBoldTextColor;
-            case ColorProfileComponent.UISliderColor:
-                return this.UISliderColor;
+            case ColorProfileComponent.UISliderBackgroundColor:
+                return this.UISliderBackgroundColor;
             case ColorProfileComponent.BackgroundColor:
                 return this.BackgroundColor;
             case ColorProfileComponent.VectorColor:
@@ -64,7 +65,7 @@ public enum ColorProfileComponent
     UIButtonColor,
     UITextColor,
     UIBoldTextColor,
-    UISliderColor,
+    UISliderBackgroundColor,
     BackgroundColor,
     VectorColor,
     VectorCircleColor,
