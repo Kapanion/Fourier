@@ -25,7 +25,7 @@ public class HardcodedRenderer : MonoBehaviour
     [ContextMenu("Apply Current")]
     public void ApplyCurrent()
     {
-        var vectors = HardcodedBS.options[chosen];
+        var vectors = HardcodedBS.options[chosen].Clone() as Vector2[];
 
         const float desiredMaxWidth = 8;
         const float desiredMaxHeight = 8;

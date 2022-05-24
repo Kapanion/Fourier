@@ -14,18 +14,20 @@ public class RadioButtonManager : MonoBehaviour
 
     [Space] public UnityEvent onAnySelected;
 
-    private int selected;
+    private int selected = DESELECTED;
 
     private void Start()
     {
-        selected = defaultSelection;
+        Select(defaultSelection);
     }
     
-    private bool ValidIndex(int index) => (index < 0 || index >= buttons.Length);
+    private bool InvalidIndex(int index) => (index < 0 || index >= buttons.Length);
 
     public void Select(int index)
     {
-        if (!ValidIndex(index))
+        if (index == selected) return;
+        
+        if (InvalidIndex(index))
         {
             DeselectAll();
             return;

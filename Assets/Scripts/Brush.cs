@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Brush : SingletonBase<Brush>
 {
@@ -11,9 +12,13 @@ public class Brush : SingletonBase<Brush>
     private TrailRenderer trlRend;
 
     public bool working;
+
     public void UpdateVectorAmm(float value) {
         numberOfVectors = (int)value;    
     }
+
+    private bool currentlyDrawing;
+
 
     void Start()
     {
@@ -46,7 +51,7 @@ public class Brush : SingletonBase<Brush>
     public void Enable()
     {
         trlRend.enabled = true;
-        Init();
+        trlRend.Clear();
     }
 
     void Update()
@@ -62,14 +67,17 @@ public class Brush : SingletonBase<Brush>
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         trlRend.time = 1000;
 
-        if (Input.GetMouseButton(0))
+        bool b = Helpers.IsPointerOverUIObject();
+        
+        if (!b && Input.GetMouseButton(0))
         {
             trlRend.enabled = true;
            // drawer.Hide();
             vecList.Add(pos);
             transform.position = pos;
+            currentlyDrawing = true;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (!b && Input.GetMouseButtonDown(0))
         {
             trlRend.enabled = false;
             vecList = new List<Vector2>();
@@ -80,7 +88,7 @@ public class Brush : SingletonBase<Brush>
             vecList = new List<Vector2>();
             trlRend.Clear();
         }
-        if (Input.GetMouseButtonUp(0))
+        if (currentlyDrawing && Input.GetMouseButtonUp(0))
         {
             //drawer.UpdateFunction(vecList.ToArray());
             //drawer.Show();

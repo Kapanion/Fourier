@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class RadioButton : MonoBehaviour
 {
-    public Image buttonImage;
     public UnityEvent onSelect;
     public UnityEvent onDeselect;
 

@@ -28,9 +28,16 @@ public class VectorInputFieldManager : MonoBehaviour
             Destroy(fieldsParent.GetChild(i).gameObject);
         }
 
+        fields = new List<VectorInputField>();
+
         redrawStopped = delegate { fourierDrawer.DisplayVectorsAtZeroTimeWithCoefficients(GetCoefficients()); };
 
         AddField();
+    }
+
+    public void CallStart()
+    {
+        Start();
     }
 
     public void AddField()
@@ -73,24 +80,24 @@ public class VectorInputFieldManager : MonoBehaviour
         }
     }
 
-    private void StartSimulation()
+    public void StartSimulation()
     {
         SetInteractableAll(false);
         fourierDrawer.Init(GetCoefficients());
+        simulationActive = true;
     }
 
-    private void StopSimulation()
+    public void StopSimulation()
     {
         SetInteractableAll(true);
         fourierDrawer.Reset();
         redrawStopped();
+        simulationActive = false;
     }
 
     public void ToggleSimulation()
     {
         if (simulationActive) StopSimulation();
         else StartSimulation();
-
-        simulationActive = !simulationActive;
     }
 }
