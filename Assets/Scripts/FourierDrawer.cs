@@ -172,7 +172,7 @@ public class FourierDrawer : SingletonBase<FourierDrawer>
 
     void DisplayTrail(float time)
     {
-        Complex result = function.ValueAt(time);
+        Complex result = function.ValueOfIndexAtTime(currentVectorAmount - 1, time);
         Vector3 position = new Vector3((float)result.Real, (float)result.Imaginary, 0);
 
         trailPoint.position = position;
@@ -180,7 +180,7 @@ public class FourierDrawer : SingletonBase<FourierDrawer>
 
     void DisplayTrailWave(float time)
     {
-        Complex result = function.ValueAt(time);
+        Complex result = function.ValueOfIndexAtTime(currentVectorAmount - 1, time);
         Vector3 position = new Vector3((float)result.Real, (float)result.Imaginary, 0);
 
         int last = waveLine.positionCount++;

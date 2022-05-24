@@ -3911,7 +3911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620265a84ce4a54469308e3c30275424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAllowedAmount: 1
+  minAllowedAmount: 2
   maxAllowedAmount: 800
 --- !u!1 &1269143636
 GameObject:
