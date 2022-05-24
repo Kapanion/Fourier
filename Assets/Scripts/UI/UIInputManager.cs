@@ -18,6 +18,8 @@ public class UIInputManager : MonoBehaviour
     public Button noTrailButton, normalTrailButton, waveTrailButton;
     public Slider waveSpeedSlider, timeScaleSlider, trailLifetimeSlider;
 
+    [Space] public Image cameraFollowImage;
+
     [ContextMenu("Toggle")]
     void Toggle()
     {
@@ -94,5 +96,13 @@ public class UIInputManager : MonoBehaviour
         showVectorsImage.sprite = show ? checkedSprite : uncheckedSprite;
         if (show) drawer.EnableVectors();
         else drawer.DisableVectors();
+    }
+
+    public void ToggleCameraFollow()
+    {
+        bool show = cameraFollowImage.sprite == uncheckedSprite;
+
+        cameraFollowImage.sprite = show ? checkedSprite : uncheckedSprite;
+        //TODO toggle camera follow
     }
 }

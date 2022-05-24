@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,12 @@ public class LogicManager : MonoBehaviour
 
     private void ToggleBrush()
     {
-        brush.Toggle();
+        brush.Enable();
+    }
+    
+    private void DisableBrush()
+    {
+        brush.Disable();
     }
 
     public void Reset()
