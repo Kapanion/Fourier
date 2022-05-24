@@ -130,6 +130,11 @@ public class FourierDrawer : MonoBehaviour
 
     (Vector3, float)[] GetVectorPositionsAndAngles(float time)
     {
+        if (function == null)
+        {
+            function = new FourierFunction(new []{new Complex(0, 0)});
+            Debug.Log("Fourier function was null");
+        }
         Complex[] results = function.ValuesAt(time);
         var answer = new (Vector3, float)[results.Length];
 
