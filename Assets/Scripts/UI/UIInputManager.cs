@@ -62,9 +62,9 @@ public class UIInputManager : MonoBehaviour
 
     public void OnTimeScaleChanged(float value)
     {
-        value = value.Round2();
+        value = value / 1000;
         drawer.fourierTimeScale = value;
-        timeScaleText.text = $"DRAW SPEED: {value}x";
+        timeScaleText.text = $"DRAW SPEED: {value.RoundN(3)}x";
     }
 
     public void OnTrailLifetimeChanged(float value)
@@ -103,6 +103,7 @@ public class UIInputManager : MonoBehaviour
         bool show = cameraFollowImage.sprite == uncheckedSprite;
 
         cameraFollowImage.sprite = show ? checkedSprite : uncheckedSprite;
-        //TODO toggle camera follow
+        if (show) CameraFollowTrail.Instance.StartFollowing();
+        else CameraFollowTrail.Instance.StopFollowing();
     }
 }

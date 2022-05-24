@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Drawer.unity
-    guid: 12d68e7330733b644a6c6bd8ed061392
+    path: Assets/Scenes/Drawer_New.unity
+    guid: 0138ec8408531814aa5f1d968c3dd85c
   m_configObjects: {}
