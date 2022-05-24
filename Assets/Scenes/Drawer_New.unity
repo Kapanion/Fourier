@@ -5201,8 +5201,10 @@ MonoBehaviour:
   waveLine: {fileID: 368312979}
   vectorPrefab: {fileID: 355820299794387849, guid: 4a242011fa3945642b6dcb40cde0b515, type: 3}
   vectorParent: {fileID: 2121986540}
+  started: 0
   fourierTimeScale: 0.2
   waveLineSpeedMultiplier: 5
+  currentVectorAmount: 0
 --- !u!4 &659248048
 Transform:
   m_ObjectHideFlags: 0
@@ -9823,6 +9825,7 @@ GameObject:
   - component: {fileID: 1266673810}
   - component: {fileID: 1266673809}
   - component: {fileID: 1266673813}
+  - component: {fileID: 1266673814}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -9942,6 +9945,20 @@ MonoBehaviour:
   timeScaleSlider: {fileID: 975741937}
   trailLifetimeSlider: {fileID: 1010696556}
   cameraFollowImage: {fileID: 0}
+--- !u!114 &1266673814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266673808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620265a84ce4a54469308e3c30275424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minAllowedAmount: 2
+  maxAllowedAmount: 800
 --- !u!1 &1269143636
 GameObject:
   m_ObjectHideFlags: 0
@@ -11510,7 +11527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 204.87515, y: 0}
   m_SizeDelta: {x: 281.8704, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1434819648
