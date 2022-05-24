@@ -34,15 +34,27 @@ public class Brush : MonoBehaviour
         if (!trlRend.enabled) Clear();
     }
 
+    public void Disable()
+    {
+        trlRend.enabled = false;
+        Clear();
+    }
+    
+    public void Enable()
+    {
+        trlRend.enabled = true;
+        Init();
+    }
+
     void Update()
     {
         if (!working) return;
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            working = false;
-            return;
-        }
+        // if (Input.GetKeyDown(KeyCode.B))
+        // {
+        //     working = false;
+        //     return;
+        // }
 
         Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         trlRend.time = 1000;

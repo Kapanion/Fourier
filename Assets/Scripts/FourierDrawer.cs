@@ -86,7 +86,8 @@ public class FourierDrawer : MonoBehaviour
     {
         magnitudes = new float[function.Size];
 
-        if (displayVectors) for (int i = 0; i < function.Size; i++)
+        if (displayVectors)
+            for (int i = 0; i < function.Size; i++)
             {
                 int freq = FourierFunction.IndexToFrequency(i);
 

@@ -62,4 +62,10 @@ public class HardcodedRenderer : MonoBehaviour
     {
         chosen = (HardcodedItem)item;
     }
+    
+    public void ChooseAndApply(int item)
+    {
+        chosen = (HardcodedItem)item;
+        ApplyCurrent();
+    }
 }

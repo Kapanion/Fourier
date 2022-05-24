@@ -10,15 +10,35 @@ public class LogicManager : MonoBehaviour
     public FourierDrawer drawer;
     public Brush brush;
 
-    void CleanAndEnableBrush()
+    private void CleanAndEnableBrush()
     {
         drawer.Clear();
         brush.Init();
     }
 
+    private void ToggleBrush()
+    {
+        brush.Toggle();
+    }
+
+    public void Reset()
+    {
+        // ToggleBrush();
+        // CleanAndEnableBrush();
+        // Calling both on the same frame causes problems for some reason.
+        StartCoroutine(IReset());
+    }
+
+    IEnumerator IReset()
+    {
+        ToggleBrush();
+        yield return null;
+        CleanAndEnableBrush();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(brushCode)) CleanAndEnableBrush();
-        if (Input.GetKeyDown(toggleBrushMode)) brush.Toggle();
+        if (Input.GetKeyDown(toggleBrushMode)) ToggleBrush();
     }
 }

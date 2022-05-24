@@ -89,7 +89,7 @@ public class FourierFunction
             numberOfPoints += extraPoints;
         }
         for (int i = 0; i < vals.Length; ++i)
-            {
+        {
             int extraPoints = (int)((vals[i] - vals[(i + 1) % vals.Length]).Magnitude / maxDist) + 1;
             for (int j = 0; j < extraPoints; j++)
             {
