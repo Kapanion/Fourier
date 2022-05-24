@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Brush : MonoBehaviour
+public class Brush : SingletonBase<Brush>
 {
     public int numberOfVectors;
     public FourierDrawer drawer;
@@ -11,6 +11,9 @@ public class Brush : MonoBehaviour
     private TrailRenderer trlRend;
 
     public bool working;
+    public void UpdateVectorAmm(float value) {
+        numberOfVectors = (int)value;    
+    }
 
     void Start()
     {

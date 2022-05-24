@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Complex = System.Numerics.Complex;
 using UnityEngine;
 
-public class FourierDrawer : MonoBehaviour
+public class FourierDrawer : SingletonBase<FourierDrawer>
 {
     public bool displayVectors;
 
@@ -21,7 +21,8 @@ public class FourierDrawer : MonoBehaviour
     public Transform vectorParent;
     private Transform[] vectors;
 
-    private bool started = false;
+    [HideInInspector]
+    public bool started = false;
 
     public float fourierTimeScale = 0.2f;
     public float waveLineSpeedMultiplier = 1;
@@ -29,6 +30,9 @@ public class FourierDrawer : MonoBehaviour
     float waveLineLastTime = 0;
 
     float flashPoint = 0; // last time game was reset, needed to not mess up drawing logic
+
+    [HideInInspector]
+    public int currentVectorAmount;
 
     [ContextMenu("Clear")]
     public void Clear()
@@ -48,9 +52,11 @@ public class FourierDrawer : MonoBehaviour
     {
         if (started) Reset();
 
-        function = FourierFunction.Of(vals, numberOfVectors);
+        function = FourierFunction.Of(vals, VectorCount.Instance.maxAllowedAmount);
 
-        SetupVectors();
+        SetupVectors(numberOfVectors);
+
+        currentVectorAmount = numberOfVectors;
 
         started = true;
     }
@@ -62,7 +68,9 @@ public class FourierDrawer : MonoBehaviour
 
         function = new FourierFunction(coefficients);
 
-        SetupVectors();
+        SetupVectors(coefficients.Length);
+
+        currentVectorAmount = coefficients.Length;
 
         started = true;
     }
@@ -73,12 +81,12 @@ public class FourierDrawer : MonoBehaviour
         Clear();
     }
 
-    void SetupVectors()
+    void SetupVectors(int drawingAmount)
     {
         var data = GetVectorPositionsAndAngles(0);
 
         SetupMagnitudes();
-        SpawnVectors(data);
+        SpawnVectors(data, drawingAmount);
         DisplayVectors(data);
     }
 
@@ -95,7 +103,7 @@ public class FourierDrawer : MonoBehaviour
             }
     }
 
-    void SpawnVectors((Vector3, float)[] data)
+    void SpawnVectors((Vector3, float)[] data, int drawingAmount)
     {
         vectors = new Transform[data.Length];
 
@@ -105,6 +113,9 @@ public class FourierDrawer : MonoBehaviour
             Quaternion rot = Quaternion.Euler(0, 0, data[i].Item2);
 
             var vector = Instantiate(vectorPrefab, pos, rot, vectorParent);
+
+            if (i >= drawingAmount) vector.SetActive(false);
+
             vector.transform.localScale = Vector3.one * magnitudes[i];
             vectors[i] = vector.transform;
         }
@@ -155,7 +166,7 @@ public class FourierDrawer : MonoBehaviour
     {
         Clear();
         function = new FourierFunction(coefficients);
-        SetupVectors();
+        SetupVectors(coefficients.Length);
         DisplayVectors(GetVectorPositionsAndAngles(0));
     }
 
@@ -197,7 +208,7 @@ public class FourierDrawer : MonoBehaviour
 
         displayVectors = true;
 
-        if (vectorParent.childCount == 0) SetupVectors();
+        if (vectorParent.childCount == 0) SetupVectors(currentVectorAmount);
         else vectorParent.gameObject.SetActive(true);
     }
 
@@ -207,5 +218,30 @@ public class FourierDrawer : MonoBehaviour
 
         displayVectors = false;
         vectorParent.gameObject.SetActive(false);
+    }
+
+    public void DisableVector(int index)
+    {
+        vectorParent.GetChild(index).gameObject.SetActive(false);
+    }
+    public void EnableVector(int index)
+    {
+        vectorParent.GetChild(index).gameObject.SetActive(true);
+    }
+
+    public void UpdateVectorAmount(int newAmount)
+    {
+        if (currentVectorAmount == newAmount) return;
+
+        if(currentVectorAmount > newAmount)
+        {
+            for (int i = newAmount; i < currentVectorAmount; i++) DisableVector(i);
+        }
+        else
+        {
+            for (int i = currentVectorAmount; i < newAmount; i++) EnableVector(i);
+        }
+
+        currentVectorAmount = newAmount;
     }
 }
