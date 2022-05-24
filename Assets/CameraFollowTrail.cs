@@ -28,7 +28,9 @@ public class CameraFollowTrail : SingletonBase<CameraFollowTrail>
 
     Vector3 GetTrailPos()
     {
-        return VectorsParent.GetChild(VectorsParent.childCount - 1).position;
+        int lastIndex = FourierDrawer.Instance.currentVectorAmount - 1;
+
+        return VectorsParent.GetChild(lastIndex).position;
 
         //return FourierDrawer.Instance.trailMode switch
         //{
