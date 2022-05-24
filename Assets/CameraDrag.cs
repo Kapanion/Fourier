@@ -12,6 +12,8 @@ public class CameraDrag : SingletonBase<CameraDrag>
     private Vector2 drag;
     private Vector3 mouseLastPos;
 
+    private bool startedDragging = false;
+
     protected override void DoAwake()
     {
         camera ??= Camera.main;
@@ -21,7 +23,13 @@ public class CameraDrag : SingletonBase<CameraDrag>
     {
         if (!Dragging) return;
 
-        if (Input.GetMouseButtonDown(0)) mouseLastPos = Input.mousePosition;
+        if (!startedDragging && !Helpers.IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
+        {
+            startedDragging = true;
+            mouseLastPos = Input.mousePosition;
+        }
+
+        if (!startedDragging) return;
 
         if (Input.GetMouseButton(0))
         {
@@ -31,6 +39,8 @@ public class CameraDrag : SingletonBase<CameraDrag>
 
             mouseLastPos = Input.mousePosition;
         }
+
+        if (Input.GetMouseButtonUp(0)) startedDragging = false;
     }
 
     private void FixedUpdate()

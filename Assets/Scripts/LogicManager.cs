@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicManager : MonoBehaviour
+public class LogicManager : SingletonBase<LogicManager>
 {
     public KeyCode brushCode = KeyCode.B;
     public KeyCode toggleBrushMode = KeyCode.C;
