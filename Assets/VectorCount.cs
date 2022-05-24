@@ -9,7 +9,9 @@ public class VectorCount : SingletonBase<VectorCount>
 
     public void VectorCountChanged(float value)
     {
-        Brush.Instance.UpdateVectorAmm(value);
-        FourierDrawer.Instance.UpdateVectorAmount((int)value);
+        int amount = Mathf.Clamp((int)value, minAllowedAmount, maxAllowedAmount);
+
+        Brush.Instance.UpdateVectorAmm(amount);
+        FourierDrawer.Instance.UpdateVectorAmount(amount);
     }
 }
