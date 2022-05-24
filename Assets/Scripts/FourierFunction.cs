@@ -13,6 +13,17 @@ public class FourierFunction
 
     public int Size => coefficients.Length;
 
+    public Complex ValueOfIndexAtTime(int index, float t)
+    {
+        Complex res = Complex.Zero;
+        for (int i = 0; i <= index; ++i)
+        {
+            int freq = IndexToFrequency(i);
+            res += coefficients[i] * Complex.Exp(freq * 2f * System.Math.PI * Complex.ImaginaryOne * t);
+        }
+        return res;
+    }
+
     public Complex ValueAt(float t)
     {
         Complex res = Complex.Zero;

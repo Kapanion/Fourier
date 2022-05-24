@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Brush : MonoBehaviour
+public class Brush : SingletonBase<Brush>
 {
     public int numberOfVectors;
     public FourierDrawer drawer;
@@ -12,7 +12,13 @@ public class Brush : MonoBehaviour
     private TrailRenderer trlRend;
 
     public bool working;
+
+    public void UpdateVectorAmm(float value) {
+        numberOfVectors = (int)value;    
+    }
+
     private bool currentlyDrawing;
+
 
     void Start()
     {
