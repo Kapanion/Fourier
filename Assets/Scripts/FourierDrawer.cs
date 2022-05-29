@@ -46,6 +46,7 @@ public class FourierDrawer : SingletonBase<FourierDrawer>
         if (Application.isEditor) DestroyImmediate(vectorParent.gameObject);
         else Destroy(vectorParent.gameObject);
         vectorParent = new GameObject("Vector Parent").transform;
+        if (!displayVectors) vectorParent.gameObject.SetActive(false);
     }
 
     public void Init(Vector2[] vals, int numberOfVectors)
@@ -94,13 +95,13 @@ public class FourierDrawer : SingletonBase<FourierDrawer>
     {
         magnitudes = new float[function.Size];
 
-        if (displayVectors)
-            for (int i = 0; i < function.Size; i++)
-            {
-                int freq = FourierFunction.IndexToFrequency(i);
+        //if (displayVectors)
+        for (int i = 0; i < function.Size; i++)
+        {
+            int freq = FourierFunction.IndexToFrequency(i);
 
-                magnitudes[i] = function.GetMagnitude(freq);
-            }
+            magnitudes[i] = function.GetMagnitude(freq);
+        }
     }
 
     void SpawnVectors((Vector3, float)[] data, int drawingAmount)
