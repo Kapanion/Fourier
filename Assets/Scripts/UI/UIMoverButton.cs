@@ -11,9 +11,16 @@ public class UIMoverButton : MonoBehaviour
         Hidden,
     }
 
+    public enum UIElementPosition
+    {
+        Left,
+        Right,
+    }
+
     public RectTransform target;
     public RectTransform arrow;
     public UIElementState startingState;
+    public UIElementPosition position = UIElementPosition.Left;
 
     [Space] public float transitionTime;
     public AnimationCurve curve;
@@ -22,28 +29,37 @@ public class UIMoverButton : MonoBehaviour
     
     private Vector3 normalPos;
     private Vector3 hiddenPos;
+    private float normalRot;
+    private float hiddenRot;
 
     private bool transitionActive;
 
-    void Start()
+    private void Start()
     {
-        normalPos = target.position;
-        hiddenPos = normalPos;
-        hiddenPos.x = -target.rect.width / 2;
-
+        UpdatePositions();
         currentState = startingState;
         
         
         if (currentState == UIElementState.Hidden)
         {
-            target.position = hiddenPos;
-            arrow.rotation = Quaternion.Euler(0, 0, 0);
+            target.anchoredPosition = hiddenPos;
+            arrow.rotation = Quaternion.Euler(0, 0, hiddenRot);
         }
         else
         {
-            target.position = normalPos;
-            arrow.rotation = Quaternion.Euler(0, 0, 180);
+            target.anchoredPosition = normalPos;
+            arrow.rotation = Quaternion.Euler(0, 0, normalRot);
         }
+    }
+
+    private void UpdatePositions()
+    {        
+        normalPos = target.anchoredPosition;
+        hiddenPos = normalPos;
+        hiddenPos.x = (position == UIElementPosition.Left ? -1 : 1) * target.rect.width / 2;
+        
+        normalRot = position == UIElementPosition.Left ? 180 : 0;
+        hiddenRot = 180 - normalRot;
     }
 
     public void StartTransition()
@@ -52,11 +68,11 @@ public class UIMoverButton : MonoBehaviour
         switch (currentState)
         {
             case UIElementState.Normal:
-                StartCoroutine(Transition(normalPos, hiddenPos, 180, 0, transitionTime));
+                StartCoroutine(Transition(normalPos, hiddenPos, normalRot, hiddenRot, transitionTime));
                 currentState = UIElementState.Hidden;
                 break;
             case UIElementState.Hidden:
-                StartCoroutine(Transition(hiddenPos, normalPos, 0, 180, transitionTime));
+                StartCoroutine(Transition(hiddenPos, normalPos, hiddenRot, normalRot, transitionTime));
                 currentState = UIElementState.Normal;
                 break;
         }
@@ -67,8 +83,8 @@ public class UIMoverButton : MonoBehaviour
         transitionActive = true;
         for (float i = 0; ; i += Time.deltaTime )
         {
-            float t = curve.Evaluate(i / time);
-            target.position = Vector3.Lerp(startPos, endPos, t);
+            var t = curve.Evaluate(i / time);
+            target.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
             arrow.rotation = Quaternion.Euler(0, 0, Mathf.Lerp(startRot, endRot, t));
             if (i >= transitionTime) break;
             yield return null;

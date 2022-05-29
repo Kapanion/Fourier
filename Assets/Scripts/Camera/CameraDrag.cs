@@ -7,7 +7,7 @@ public class CameraDrag : SingletonBase<CameraDrag>
     public float speed;
     new public Camera camera;
 
-    public bool Dragging => FourierDrawer.Instance.started;
+    // public bool Dragging => FourierDrawer.Instance.started;
 
     private Vector2 drag;
     private Vector3 mouseLastPos;
@@ -21,7 +21,7 @@ public class CameraDrag : SingletonBase<CameraDrag>
 
     private void Update()
     {
-        if (!Dragging) return;
+        if (!FourierDrawer.Instance.started) return;
 
         if (!startedDragging && !Helpers.IsPointerOverUIObject() && Input.GetMouseButtonDown(0))
         {
